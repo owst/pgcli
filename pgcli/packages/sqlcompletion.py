@@ -110,6 +110,9 @@ class SqlStatement(object):
             tables = tables[1:]
         return tables
 
+    def get_previous_token(self, token):
+        return self.parsed.token_prev(self.parsed.token_index(token))[1]
+
     def get_identifier_schema(self):
         schema = (self.identifier and self.identifier.get_parent_name()) or None
         # If schema name is unquoted, lower-case it
@@ -427,8 +430,17 @@ def suggest_based_on_last_token(token, stmt):
 
         return tuple(suggest)
 
-    elif token_v in ('table', 'view', 'function'):
-        # E.g. 'DROP FUNCTION <funcname>', 'ALTER TABLE <tablname>'
+    elif token_v == 'function':
+        schema = stmt.get_identifier_schema()
+        if stmt.get_previous_token(token).value.lower() == 'drop':
+            return (Function(schema=schema, usage='signature'),)
+        elif stmt.get_previous_token(token).value.lower() == 'alter':
+            return (Function(schema=schema, usage='signature'),)
+        else:
+            return (Function(schema=schema),)
+
+    elif token_v in ('table', 'view'):
+        # E.g. 'ALTER TABLE <tablname>'
         rel_type = {'table': Table, 'view': View, 'function': Function}[token_v]
         schema = stmt.get_identifier_schema()
         if schema:

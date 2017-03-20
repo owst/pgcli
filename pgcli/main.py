@@ -152,6 +152,10 @@ class PGCli(object):
         smart_completion = c['main'].as_bool('smart_completion')
         keyword_casing = c['main']['keyword_casing']
         self.settings = {
+            'call_arg_style': c['main']['call_arg_style'],
+            'call_arg_display_style': c['main']['call_arg_display_style'],
+            'call_arg_oneliner_max': c['main'].as_int('call_arg_oneliner_max'),
+            'signature_arg_style': c['main']['signature_arg_style'],
             'casing_file': get_casing_file(c),
             'generate_casing_file': c['main'].as_bool('generate_casing_file'),
             'generate_aliases': c['main'].as_bool('generate_aliases'),

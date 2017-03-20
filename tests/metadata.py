@@ -88,7 +88,7 @@ class MetaData(object):
                 # Let all columns be text columns
                 view_cols.extend([(schema, view, col, 'text') for col in cols])
 
-        functions = [FunctionMetadata(schema, *func_meta)
+        functions = [FunctionMetadata(schema, *func_meta, arg_defaults=None)
                         for schema, funcs in metadata['functions'].items()
                         for func_meta in funcs]
 

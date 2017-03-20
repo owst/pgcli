@@ -3,6 +3,7 @@ Upcoming
 
 Features:
 ---------
+* Include arguments in function suggestions (Thanks: `Joakim Koljonen`_)
 * Suggest objects from all schemas (not just those in search_path) (Thanks: `Joakim Koljonen`_)
 
 Bug fixes:
