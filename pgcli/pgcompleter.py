@@ -650,12 +650,13 @@ class PGCompleter(Completer):
             template = '\n    ' + template
             max_arg_len = max(len(a.name) for a in args)
         else:
+            template = ' ' + template
             max_arg_len = 0
         args = (
             self._format_arg(template, arg, arg_num + 1, max_arg_len)
             for arg_num, arg in enumerate(args)
         )
-        return '(' + ', '.join(a for a in args if a) + ')'
+        return '(' + ','.join(a for a in args if a) + ')'
 
     def _format_arg(self, template, arg, arg_num, max_arg_len):
         if not template:
